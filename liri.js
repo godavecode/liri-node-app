@@ -1,5 +1,5 @@
 var keys = require('./keys.js');
-var inquirer = require('inquirer'); //package used to prompt questions and capture answers
+var inquirer = require('inquirer'); //package used to prompt questions and capture answers.
 var fs = require('fs'); //all things the api can do.
 var userInput = process.argv[2];
 var secondInput = process.argv[3];
@@ -12,7 +12,6 @@ inquirer.prompt([{
 }]).then(function(answers) {
 
   switch (answers.chose) {
-    //Statements executed when none of the values match the value of the expression
     case 'Twitter':
       tweeterSearch();
       break;
