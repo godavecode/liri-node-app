@@ -1,24 +1,25 @@
 var keys = require('./keys.js');
 var inquirer = require('inquirer'); //package used to prompt questions and capture answers.
+var spotify = require('spotify');
 var fs = require('fs'); //all things the api can do.
-var userInput = process.argv[2];
-var secondInput = process.argv[3];
+var userInput;
+var secondInput;
 
 inquirer.prompt([{
   type: "list",
   message: "Choose from the following options.",
-  choices: ["my-tweets", "spotify-this-song", "movie"],
-  chosen: "action"
+  choices: ["my-tweets", "spotify-this-song", "movie", "do-what-it-says"],
+  name: "choice"
 }]).then(function(answers) {
-
-  switch (answers.chose) {
-    case 'Twitter':
+  switch (answers.choice) {
+    case 'my-tweets':
       tweeterSearch();
       break;
-    case 'Music':
+    case 'spotify-this-song':
+
       spotifySearch();
       break;
-    case 'Movies':
+    case 'movie':
       movieSearch();
       break;
     case "do-what-it-says":
@@ -37,20 +38,20 @@ function tweeterSearch() {
 
   client.get("statuses/user_timeline", params, function(error, tweets, response) {
     if (!error) {
-      for (var i = 0; i < 20; i++) {
+    	console.log(tweets);
+      for (var i = 0; i < tweets.length; i++) {
         console.log("Tweet: " + tweets[i].created_at + "\n" + "Tweet Number: " + (i + 1) + "\n" + tweets[i].text + "\n");
       }
     }
     else {
-      console.log("error");
+      console.log(error);
     }
   });
 }
 
 function spotifySearch() {
-  var spotify = require('spotify');
   //var spotArr = [];
-
+  console.log("hey")
   inquirer.prompt([{
     type: "input",
     message: "What song name would you like to search?",
@@ -111,5 +112,7 @@ function doSearch() {
     userInput = textData[0];
 
     secondInput = textData[1];
+
+    console.log(userInput, secondInput);
   });
 }
